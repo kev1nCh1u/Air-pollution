@@ -1,3 +1,3 @@
 # Air-pollution
 
-![Alt text](Air-pollution/image/hardware.png)
+![hardware](https://github.com/kevin01yaya/Air-pollution/blob/master/image/hardware.png)
