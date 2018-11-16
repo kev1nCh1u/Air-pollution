@@ -6,3 +6,4 @@ MURATA__MHM306-05A
 
 3.風扇:
 4.MCU:
+atmega328
