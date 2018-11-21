@@ -6,22 +6,23 @@
 2.負離子產生器:
 MURATA__MHM306-05A
 
-3.風扇:
-XXD新西達 KV1000
+3.Motor:
+XXD KV1000 13T
 
 4.MCU:
 atmega328
 
-5.電子調速器：
-XXD HW30A無刷電變
+5.Electronic Speed Control：
+XXD HW30A BLDC Electronic Speed Control
 
-6.打印耗材:
+6.3D filament:
 PLA
 
-7.鋰電池:
-18650 x3
+7.battery:
+lithium polymer battery
 
-8.電池管理系統:
-3串12v
+8.Battery Management System:
+3S12V
 
-9.濾網
+9.filter
+HEPA Filters
