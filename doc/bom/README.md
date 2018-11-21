@@ -19,10 +19,10 @@ XXD HW30A BLDC Electronic Speed Control
 PLA
 
 7. battery:
-lithium polymer battery
+lithium polymer battery 18650
 
 8. Battery Management System:
-3S12V
+3S12V Li-ion 35A 
 
 9. filter
 HEPA Filters
