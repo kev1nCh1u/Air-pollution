@@ -1,7 +1,7 @@
 # Air-pollution
 
-##Hardware
+## Hardware
 ![hardware](https://github.com/kevin01yaya/Air-pollution/blob/master/image/hardware.png)
 
-##software
+## software
 ![software](https://github.com/kevin01yaya/Air-pollution/blob/master/image/software.jpg)
