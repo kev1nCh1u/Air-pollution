@@ -22,7 +22,7 @@
  ([buy](https://www.colormatrix3d.tw/product/pla-normal-white))
 
  7. battery:
- lithium polymer battery 18650 [7] x6
+ lithium polymer battery [18650][7] x6
 
  8. Battery Management System:
  3S12V Li-ion 35A.
