@@ -17,7 +17,7 @@
   atmega328.
   ([buy][4])
 
-5. Electronic Speed Control：
+5. Electronic Speed Control:
   [XXD HW30A BLDC Electronic Speed Control](https://github.com/kevin01yaya/Air-pollution/blob/master/doc/bom/bp-hw30a-esc-2015.pdf).
   ([buy][5])
 
