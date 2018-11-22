@@ -2,12 +2,12 @@
 
 ## list
 1. LDO:
-  LM7805.
-  ([buy][1])
+  [LM7805][1].
+  
 
 2. 負離子產生器:
-  MURATA__MHM306-05A.
-  ([buy][2])
+  [MURATA__MHM306-05A][2].
+  
 
 3. Motor:
   [XXD KV1000 10T](https://github.com/kevin01yaya/Air-pollution/blob/master/doc/bom/BLDC_A2212_13T.pdf).
@@ -40,8 +40,8 @@
 ## table
 | name | norm | buy |
 | ------ | ------ | ------ |
-| LDO | LM7805 | [$][1] |
-| 負離子產生器 | MURATA__MHM306-05A | [$][2] |
+| LDO | [LM7805][1] |  |
+| 負離子產生器 | [MURATA__MHM306-05A][2] |  |
 | Motor | [XXD KV1000 10T](https://github.com/kevin01yaya/Air-pollution/blob/master/doc/bom/BLDC_A2212_13T.pdf) | [$][3] |
 | MCU | atmega328 | [$][4] |
 | Electronic Speed Control | [XXD HW30A BLDC Electronic Speed Control](https://github.com/kevin01yaya/Air-pollution/blob/master/doc/bom/bp-hw30a-esc-2015.pdf) | [$][5] |
