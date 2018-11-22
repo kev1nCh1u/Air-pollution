@@ -42,13 +42,14 @@
 | ------ | ------ | ------ |
 | LDO | [LM7805][1] |  |
 | 負離子產生器 | [MURATA__MHM306-05A][2] |  |
-| Motor | [XXD KV1000 10T](https://github.com/kevin01yaya/Air-pollution/blob/master/doc/bom/BLDC_A2212_13T.pdf) | [$][3] |
-| MCU | atmega328 | [$][4] |
-| Electronic Speed Control | [XXD HW30A BLDC Electronic Speed Control](https://github.com/kevin01yaya/Air-pollution/blob/master/doc/bom/bp-hw30a-esc-2015.pdf) | [$][5] |
-| 3D filament | [PLA](https://zh.wikipedia.org/wiki/%E8%81%9A%E4%B9%B3%E9%85%B8) White | [$][6] |
-| battery | lithium polymer battery 18650 x6 | [$][7], [$][7.1] |
-| Battery Management System | 3S12V Li-ion 35A | [$][8] |
-| filter | HEPA Filters | [$][9] |
+| Motor | [XXD KV1000 10T](https://github.com/kevin01yaya/Air-pollution/blob/master/doc/bom/BLDC_A2212_13T.pdf) | [¥21.00][3] |
+| MCU | atmega328 | [$1.33][4] |
+| Electronic Speed Control | [XXD HW30A BLDC Electronic Speed Control](https://github.com/kevin01yaya/Air-pollution/blob/master/doc/bom/bp-hw30a-esc-2015.pdf) | [¥19.50][5] |
+| 3D filament | [PLA](https://zh.wikipedia.org/wiki/%E8%81%9A%E4%B9%B3%E9%85%B8) White | [NT.300][6] |
+| battery | lithium polymer battery 18650 x6 | [NT.299][7], [NT.185][7.1] |
+| Battery Management System | 3S12V Li-ion 35A | [¥38.70][8] |
+| filter | HEPA Filters | [NT.570][9] |
+| | Total | NT.~2500 |
 
 [1]: http://www.ti.com/lit/ds/symlink/lm340.pdf                                               "TI_LM7805"
 [2]: https://www.murata.com/products/productdetail?partno=MHM306-05A "MURATA__MHM306-05A"
