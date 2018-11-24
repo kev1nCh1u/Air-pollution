@@ -20,3 +20,34 @@
 ```
 avrdude -q -c avrisp -P com3 -b 19200 -p atmega328p -U flash:w:(檔案位置):i
 ```
+
+## 11/24更新
+之前的燒錄方式，我來講清楚點好了
+以下步驟為第一次燒錄時區要做的設定
+首先先知道自己arduino的資料夾，如果沒下載的就去下載吧。
+
+再來去對'我的電腦'右鍵內容，左邊那四個選進階系統設定
+![](https://i.imgur.com/PZQZ15N.png)
+
+接著按環境變數
+![](https://i.imgur.com/HWuxsJn.png)
+
+下面的系統變數點選path後按編輯
+![](https://i.imgur.com/jbFoTbi.png)
+
+點選新增，把你剛剛記的arduino位置，裡面的hardware\tools\avr的bin、avr\bin、etc三個資料夾的位置全部編進來
+![](https://i.imgur.com/aDghbQT.png)
+
+開啟cmd，打上avrdude，如果出現此畫面就代表成功了
+![](https://i.imgur.com/oQ4AJlE.png)
+
+再來是燒錄，這邊我因為沒有燒錄器，所以用arduino來代替。
+燒錄之前請先開arduino IDE，把example裡的ArduinoISP這個範例程式碼燒進你的arduino板子裡。
+
+再來把你要燒的atmega328接好
+![](https://i.imgur.com/aLJMStW.png)
+
+一切就緒之後，輸入這個指令就完成了
+```
+avrdude -q -c avrisp -P com3 -b 19200 -p atmega328p -U flash:w:(檔案位置):i
+```
