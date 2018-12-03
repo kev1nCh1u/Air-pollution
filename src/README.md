@@ -51,3 +51,37 @@ avrdude -q -c avrisp -P com3 -b 19200 -p atmega328p -U flash:w:(檔案位置):i
 ```
 avrdude -q -c avrisp -P com3 -b 19200 -p atmega328p -U flash:w:(檔案位置):i
 ```
+
+## 12/3更新
+### input的使用方法
+參考網址：http://www.elecrom.com/avr-tutorial-2-avr-input-output/
+先付上程式碼
+```c=
+/*
+ * test2.c
+ *
+ * Created: 2018/11/30 上午 10:22:30
+ * Author : bsiotmceh
+ */ 
+#define F_CPU 16000000UL
+#include <avr/io.h>
+#include <util/delay.h>
+
+int main(void)
+{
+    /* Replace with your application code */
+    DDRB = 0xFF;
+    PORTB = 0x00;
+    DDRC = 0x00;
+    PORTC |= 0b00000011; 
+	
+    while (1) 
+    {
+        if((PINC & 0b00000001)==1)
+            PORTB |= 0b00100000;
+        else if((PINC & 0b00000001)==0)
+            PORTB &= 0b11011111;
+    }
+}
+```
+一開始DDR就是設定輸入輸出，1為輸出0為輸入，可是我嘗試在B設定輸入，但是燒進去後都沒有成功，後來改成C輸入，燒進去就成功了，真神奇。
