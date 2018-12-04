@@ -85,3 +85,127 @@ int main(void)
 }
 ```
 一開始DDR就是設定輸入輸出，1為輸出0為輸入，可是我嘗試在B設定輸入，但是燒進去後都沒有成功，後來改成C輸入，燒進去就成功了，真神奇。
+
+然後PIN是來讀腳位資料用的
+
+## 12/4更新
+看了一些網路上的教學，先把程式碼抄下來用，設定甚麼的可能要慢慢摸索datasheet了。
+### PWM
+參考網址：https://www.youtube.com/watch?v=ZhIRRyhfhLM&t=766s
+```c=
+/*
+ * PWM.c
+ *
+ * Created: 3/20/2013 9:29:11 PM
+ *  Author: SAM
+ */ 
+
+#define F_CPU 16000000UL
+
+#include <avr/io.h>
+#include <avr/interrupt.h>
+#include <util/delay.h>
+
+double dutyCycle = 0;
+
+int main(void)
+{	
+    DDRD = (1 << PORTD6);
+    
+    TCCR0A = (1 << COM0A1) | (1 << WGM00) | (1 << WGM01);
+    TIMSK0 = (1 << TOIE0);
+    
+    OCR0A = (dutyCycle/100.0)*255.0;
+    
+    sei();
+    
+    TCCR0B = (1 << CS00) | (1 << CS02);
+    
+    while(1)
+    {
+        //TODO:: Please write your application code
+    	_delay_ms(100);
+    	
+    	dutyCycle += 10;
+    	
+    	if(dutyCycle > 100)
+    	{
+    		dutyCycle = 0;
+    	}						
+    }
+}
+
+ISR(TIMER0_OVF_vect)
+{
+    OCR0A = (dutyCycle/100.0)*255;
+}
+```
+上面牽扯到了一堆設定，而且還用到了計數中斷。
+如果從while迴圈來看，每隔0.1秒dutyCycle就會加10，大於100就跳回0。
+下方函式應該是計數中斷觸發的時候，就會把dutyCycle的資料傳給OCR0A，這好像是跟PORTD6是連動的，所以最後在PD6腳就會輸出一個週期為1秒的三角波。
+
+### Analog Input
+參考網址：https://www.youtube.com/watch?v=51QJ_WHN7u0&t=64s
+```c=
+/*
+ * ADCexample.c
+ *
+ * Created: 4/13/2013 5:22:48 PM
+ *  Author: SAM
+ */ 
+
+#define F_CPU 16000000UL
+
+#include <avr/io.h>
+#include <avr/interrupt.h>
+
+double dutyCycle = 0;
+
+int main(void)
+{
+    DDRD = (1 << PORTD6);
+    
+    TCCR0A = (1 << COM0A1) | (1 << WGM00) | (1 << WGM01);
+    TIMSK0 = (1 << TOIE0);
+    
+    setupADC();
+    
+    sei();
+    
+    TCCR0B = (1 << CS00) | (1 << CS02);
+    
+    while(1)
+    {
+    	//TODO:: Please write your application code
+    }
+}
+
+void setupADC()
+{
+    ADMUX = (1 << REFS0) | (1 << MUX0) | (1 << MUX1);
+    ADCSRA = (1 << ADEN) | (1 << ADIE) | (1 << ADPS0) | (1 << ADPS1) | (1 << ADPS2);
+    DIDR0 = (1 << ADC5D);
+	
+    startConversion();
+}
+
+void startConversion()
+{
+    ADCSRA |= (1 << ADSC);
+}
+
+ISR(TIMER0_OVF_vect)
+{
+    OCR0A = dutyCycle;
+}
+
+ISR(ADC_vect)
+{
+    dutyCycle = ADC;
+    startConversion();
+}
+```
+同樣也有用到計數中斷，計數的設定跟上面的PWM差不多，只是analog方面我幾乎就看不懂了，好像也有用到中斷。
+我的猜測是這樣，在main()有一行叫setupADC()，很直觀應該就是設定ADC了。
+設定完就是startConrversion()，好像是啟動analog中斷吧?
+最下面的ISR(ADC_vect)大概是analog中斷發生時的處理吧，把資料讀過去後一樣要startConrversion()。
