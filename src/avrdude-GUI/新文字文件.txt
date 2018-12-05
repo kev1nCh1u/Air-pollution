@@ -1,0 +1,6 @@
+avrdude -q -c avrisp -P com3 -b 19200 -p atmega328p -U flash:w:C:\Users\bsiotmceh\Desktop\hello_world.ino.hex:i
+
+
+avrdude -q -c usbasp -p atmega328p -U flash:w:C:\Users\bsiotmceh\Desktop\hello_world.ino.hex:i
+
+avrdude -v -patmega328p -carduino -PCOM3 -b115200 -D -Uflash:w:C:\Users\bsiotmceh\Desktop\test1.hex:i
