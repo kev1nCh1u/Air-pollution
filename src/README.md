@@ -16,6 +16,7 @@
 大概寫了一下程式，就只是普通的亮滅程式而已
 
 再來就讓他跑編譯產生hex檔
+
 燒錄器的部分，我直接用arduino來代替，並且透過avrdude來燒錄，一些小步驟我就懶得講了，去cmd下以下指令就能燒進去了。
 ```
 avrdude -q -c avrisp -P com3 -b 19200 -p atmega328p -U flash:w:(檔案位置):i
@@ -23,7 +24,9 @@ avrdude -q -c avrisp -P com3 -b 19200 -p atmega328p -U flash:w:(檔案位置):i
 
 ## 11/24更新
 之前的燒錄方式，我來講清楚點好了
+
 以下步驟為第一次燒錄時區要做的設定
+
 首先先知道自己arduino的資料夾，如果沒下載的就去下載吧。
 
 再來去對'我的電腦'右鍵內容，左邊那四個選進階系統設定
@@ -55,6 +58,7 @@ avrdude -q -c avrisp -P com3 -b 19200 -p atmega328p -U flash:w:(檔案位置):i
 ## 12/3更新
 ### input的使用方法
 參考網址：http://www.elecrom.com/avr-tutorial-2-avr-input-output/
+
 先付上程式碼
 ```c=
 /*
@@ -141,7 +145,9 @@ ISR(TIMER0_OVF_vect)
 }
 ```
 上面牽扯到了一堆設定，而且還用到了計數中斷。
+
 如果從while迴圈來看，每隔0.1秒dutyCycle就會加10，大於100就跳回0。
+
 下方函式應該是計數中斷觸發的時候，就會把dutyCycle的資料傳給OCR0A，這好像是跟PORTD6是連動的，所以最後在PD6腳就會輸出一個週期為1秒的三角波。
 
 ### Analog Input
@@ -206,6 +212,36 @@ ISR(ADC_vect)
 }
 ```
 同樣也有用到計數中斷，計數的設定跟上面的PWM差不多，只是analog方面我幾乎就看不懂了，好像也有用到中斷。
+
 我的猜測是這樣，在main()有一行叫setupADC()，很直觀應該就是設定ADC了。
+
 設定完就是startConrversion()，好像是啟動analog中斷吧?
+
 最下面的ISR(ADC_vect)大概是analog中斷發生時的處理吧，把資料讀過去後一樣要startConrversion()。
+
+至於analog的輸入腳，依照文檔來看，大概是ADMUX的bit0~3，因為我用的是ADC3腳位(PORTC3)，所以就設定0011。
+
+## 12/12更新
+我們試著讓風扇運轉，首先先用原廠附的PWM產生器
+最低：
+![](https://raw.githubusercontent.com/kevin01yaya/Air-pollution/master/image/bldc_pwm_LOW.BMP)
+
+最高：
+![](https://raw.githubusercontent.com/kevin01yaya/Air-pollution/master/image/bldc_pwm_HIGH.BMP)
+
+然後我們用上面的ADC範例程式來改，畢竟輸出就是PWM訊號
+![](https://raw.githubusercontent.com/kevin01yaya/Air-pollution/master/image/AtoP.BMP)
+
+這時遇到了一個問題，頻率不一樣，所以我們開始一直翻datasheet，去找出如何讓頻率變慢的方法...
+![](https://i.imgur.com/KUqohp3.png)
+![](https://i.imgur.com/vU9k9JW.png)
+
+從我的程式再加上這兩張圖就可以知道，我的速度已經是最慢的了，除非去改動fclk，但我們不會改就是了，儘管改了F_CPU頻率也是一樣
+
+不過儘管頻率不一樣，還是可以接上去的
+
+這時候又有另一個問題，風扇的脈衝寬度的上下限為0.9m~2.15m，不能太高或太低，所以程式上就必須把輸出限制住，經過一段時間的計算 (~~耍低能~~) ，把程式改成這樣
+```
+OCR0A = dutyCycle / 4 / 13.42 + 13;
+```
+好了，大功告成
