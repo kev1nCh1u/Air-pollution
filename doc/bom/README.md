@@ -5,10 +5,10 @@
 | LDO | [LM7805][LM7805] |  |
 | 負離子產生器 | [MURATA__MHM306-05A][MURATA__MHM306-05A] |  |
 | BLDC Motor | [XXD KV1000 10T][XXD KV1000 10T] | [¥21.00][¥21.00] |
-| MCU | atmega328 | [$1.33][$1.33] |
+| MCU | [atmega328][atmega328] | [$1.33][$1.33] |
 | Electronic Speed Control | [XXD HW30A BLDC ESC][XXD HW30A BLDC ESC] | [¥19.50][¥19.50] |
 | 3D filament | [PLA][PLA] White | [NT.300][NT.300] |
-| battery | lithium polymer battery 18650 x9 | [NT.299][NT.299], [NT.250][NT.250] |
+| battery | lithium polymer battery 18650 x3 | [NT.299][NT.299], [NT.250][NT.250] |
 | Battery Management System | 3S12V Li-ion 35A | [¥38.70][¥38.70], [NT.185][NT.185] |
 | filter | HEPA Filters | [NT.570][NT.570] |
 | PM2.5 sensor | GP2Y1010AU0F | [NT.220][NT.220] |
@@ -18,6 +18,7 @@
 [MURATA__MHM306-05A]: https://www.murata.com/products/productdetail?partno=MHM306-05A
 [XXD KV1000 10T]: https://github.com/kevin01yaya/Air-pollution/blob/master/doc/bom/BLDC_A2212_13T.pdf
 [¥21.00]: https://item.taobao.com/item.htm?spm=a230r.1.14.5.700d4548DGiHi5&id=520782425493&ns=1&abbucket=20#detail
+[atmega328]: http://ww1.microchip.com/downloads/en/DeviceDoc/ATmega48A-PA-88A-PA-168A-PA-328-P-DS-DS40002061A.pdf
 [$1.33]: https://www.microchip.com/wwwproducts/en/ATmega328
 [XXD HW30A BLDC ESC]: https://github.com/kevin01yaya/Air-pollution/blob/master/doc/bom/bp-hw30a-esc-2015.pdf
 [¥19.50]: https://item.taobao.com/item.htm?spm=2013.1.w4023-11742923545.4.7849757aIZ1xOq&id=520782669968
