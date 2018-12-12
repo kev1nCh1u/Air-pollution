@@ -223,16 +223,21 @@ ISR(ADC_vect)
 
 ## 12/12更新
 我們試著讓風扇運轉，首先先用原廠附的PWM產生器
+
 最低：
+
 ![](https://raw.githubusercontent.com/kevin01yaya/Air-pollution/master/image/bldc_pwm_LOW.BMP)
 
 最高：
+
 ![](https://raw.githubusercontent.com/kevin01yaya/Air-pollution/master/image/bldc_pwm_HIGH.BMP)
 
 然後我們用上面的ADC範例程式來改，畢竟輸出就是PWM訊號
+
 ![](https://raw.githubusercontent.com/kevin01yaya/Air-pollution/master/image/AtoP.BMP)
 
 這時遇到了一個問題，頻率不一樣，所以我們開始一直翻datasheet，去找出如何讓頻率變慢的方法...
+
 ![](https://i.imgur.com/KUqohp3.png)
 ![](https://i.imgur.com/vU9k9JW.png)
 
