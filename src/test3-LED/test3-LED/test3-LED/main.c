@@ -14,11 +14,10 @@ double dutyCycle = 0;
 
 int main(void)
 {
-    DDRD = (1 << PORTD6);
-	DDRB = (1 << PORTB1) | (1 << PORTB3);
+	DDRD = (1 << PORTD6) | (1 << PORTD5);
+	DDRB = (1 << PORTB3);
     
-    TCCR0A = (1 << COM0A1) | (1 << WGM00) | (1 << WGM01);
-	TCCR1A = (1 << COM0A1) | (1 << WGM00) | (1 << WGM01);
+    TCCR0A = (1 << COM0A1) | (1 << COM0B1) | (1 << WGM00) | (1 << WGM01);
 	TCCR2A = (1 << COM0A1) | (1 << WGM00) | (1 << WGM01);
     TIMSK0 = (1 << TOIE0);
     
@@ -27,6 +26,7 @@ int main(void)
     sei();
     
     TCCR0B = (1 << CS00) | (1 << CS02);
+	TCCR2B = (1 << CS00) | (1 << CS02);
     
     while(1)
     {
@@ -51,7 +51,7 @@ void startConversion()
 ISR(TIMER0_OVF_vect)
 {
     OCR0A = dutyCycle;
-	OCR1A = dutyCycle;
+	OCR0B = dutyCycle;
 	OCR2A = dutyCycle;
 }
 
