@@ -18,6 +18,8 @@ int main(void)
 	DDRB = (1 << PORTB1) | (1 << PORTB3);
     
     TCCR0A = (1 << COM0A1) | (1 << WGM00) | (1 << WGM01);
+	TCCR1A = (1 << COM0A1) | (1 << WGM00) | (1 << WGM01);
+	TCCR2A = (1 << COM0A1) | (1 << WGM00) | (1 << WGM01);
     TIMSK0 = (1 << TOIE0);
     
     setupADC();
