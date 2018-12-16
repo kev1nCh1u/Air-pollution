@@ -50,9 +50,37 @@ void startConversion()
 
 ISR(TIMER0_OVF_vect)
 {
-    OCR0A = dutyCycle;
-	OCR0B = dutyCycle;
-	OCR2A = dutyCycle;
+	if (dutyCycle < 50) //green
+	{
+		OCR0A = 9;
+		OCR0B = 255;
+		OCR2A = 0;
+	}
+	else if (dutyCycle < 100) //yellow
+	{
+		OCR0A = 255;
+		OCR0B = 247;
+		OCR2A = 0;
+	}
+	else if (dutyCycle < 150) //orange
+	{
+		OCR0A = 255;
+		OCR0B = 137;
+		OCR2A = 0;
+	}
+	else if (dutyCycle < 200) //red
+	{
+		OCR0A = 255;
+		OCR0B = 0;
+		OCR2A = 0;
+	}
+	else //purple
+	{
+		OCR0A = 205;
+		OCR0B = 0;
+		OCR2A = 255;
+	}
+
 }
 
 ISR(ADC_vect)
