@@ -33,7 +33,7 @@ int main(void)
 	setupADC();
 	sei();
 	
-	TCCR2B = (1 << CS20) | (1 << CS21) | (1 << CS22);
+	TCCR2B = (1 << CS20);
 	//TCCR0B = (1 << CS00) | (1 << CS02);
 	
     while(1)
@@ -97,32 +97,15 @@ ISR(TIMER0_OVF_vect)
 ISR(TIMER2_OVF_vect)
 {
 	if(a == 0){
-		a1++;
-		if(a1 >= 10){
-			a1 = 0;
-			a2++;
-			if(a2 >= 6){
-				PORTD |= (1 << PORTD7);
-				a1 = 0;
-				a2 = 0;
-				a = 1;
-			}
-		}
-		}else if (a == 1){
-		a1++;
-		if(a1 >= 10){
-			a1 = 0;
-			a2++;
-			if(a2 >= 6){
-				PORTD &= (0 << PORTD7);
-				a1 = 0;
-				a2 = 0;
-				a = 0;
-				//startConversion();
-			}
-		}
+		PORTD |= (1 << PORTD7);
+		a = 1;
+		TCNT2 = 250;
+	}else if (a == 1){
+		PORTD &= (0 << PORTD7);
+		a = 0;
+		startConversion();
+		TCNT2 = 200;
 	}
-	OCR0A = (dutyCycle/100.0)*255;
 	
 }
 ISR(ADC_vect)
