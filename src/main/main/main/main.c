@@ -19,7 +19,7 @@ int main(void)
 {	
 	
 	DDRD = (1 << PORTD6) | (1 << PORTD5) | (1 << PORTD3) | (1 << PORTD4) | (1 << PORTD7);
-	DDRB = (1 << PORTB3) | (1 << PORTB0);
+	DDRB = (1 << PORTB3) | (1 << PORTB0) | (1 << PORTB1) | (1 << PORTB0);
 	
 	//計數器0為三色LED控制、1為pm2.5的脈波訊號、2為馬達的控制
 	TCCR0A = (1 << COM0A1) | (1 << COM0B1) | (1 << WGM00);
@@ -35,9 +35,9 @@ int main(void)
 	
 	TCCR0B = (1 << CS00);
 	TCCR1B = (1 << CS10) | (1 << CS12) | (1 << WGM12);
-	TCCR2B = (1 << CS20) | (1 << CS22);
+	TCCR2B = (1 << CS20) | (1 << CS21) | (1 << CS22);
 
-	OCR1A = 103;
+	OCR1A = 104;
 	
     while(1)
     {
@@ -73,14 +73,14 @@ int main(void)
 			PORTB |= 1 << PORTB0;
 		}
 		//PWM
-		OCR2A = dutyCycle / 4 / 13.42 + 13;
+		
     }
 }
 void setupADC()
 {
 	ADMUX = (1 << REFS0) | (1 << MUX0) | (1 << MUX1);
 	ADCSRA = (1 << ADEN) | (1 << ADIE) | (1 << ADPS0) | (1 << ADPS1) | (1 << ADPS2);
-	DIDR0 = (1 << ADC5D);
+	DIDR0 = (1 << ADC3D);
 }
 void startConversion()
 {
@@ -95,7 +95,20 @@ ISR(TIMER1_OVF_vect)
 	startConversion();
 }
 
+ISR(TIMER2_OVF_vect)
+{
+	OCR2A = dutyCycle / 13.42 + 13;
+}
+
 ISR(ADC_vect)
 {
 	dutyCycle = ADC/4;
+	if (a1 == 0){
+		PORTB |= (1 << PORTB0);
+		a1 = 1;
+	}else{
+		PORTB |= (0 << PORTB0);
+		a1 = 0;
+	}
+	
 }
