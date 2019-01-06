@@ -19,10 +19,12 @@ int main(void)
 {	
 	
 	DDRD = (1 << PORTD6) | (1 << PORTD5) | (1 << PORTD3) | (1 << PORTD4) | (1 << PORTD7);
-	DDRB = (1 << PORTB3) | (1 << PORTB0) | (1 << PORTB1) | (1 << PORTB0);
+	DDRB = (1 << PORTB3) | (1 << PORTB0) | (1 << PORTB1);
+		
+	
 	
 	//計數器0為三色LED控制、1為pm2.5的脈波訊號、2為馬達的控制
-	TCCR0A = (1 << COM0A1) | (1 << COM0B1) | (1 << WGM00);
+	TCCR0A = (1 << COM0A1) | (1 << WGM00) | (1 << WGM01);
 	TCCR1A = (1 << COM1A1) | (1 << WGM10);
 	TCCR2A = (1 << COM2A1) | (1 << COM2B1) | (1 << WGM20) | (1 << WGM21);
 	TIMSK0 = (1 << TOIE0);
@@ -50,8 +52,8 @@ int main(void)
 		}
 		else if (dutyCycle < 100 ) //yellow
 		{
-			PORTD |= 1 << PORTD4;
-			PORTD &= 0 << PORTD7;
+			PORTD |= 0x10;
+			PORTD &= 0x7f;
 			PORTB &= 0 << PORTB0;
 		}
 		else if (dutyCycle < 150) //orange
@@ -78,21 +80,25 @@ int main(void)
 }
 void setupADC()
 {
+	
+	ADMUX = (1 << REFS0) | (1 << MUX0) | (1 << MUX1);
+	ADCSRA = 0xaf;
+	//ADCSRA = (1 << ADEN) | (1 << ADIE) | (1 << ADPS0) | (1 << ADPS1) | (1 << ADPS2) | (1 << ADATE);
+	ADCSRB = (1 << ADTS2) | (1 << ADTS1);
+	DIDR0 = (1 << ADC3D);
+	/*
 	ADMUX = (1 << REFS0) | (1 << MUX0) | (1 << MUX1);
 	ADCSRA = (1 << ADEN) | (1 << ADIE) | (1 << ADPS0) | (1 << ADPS1) | (1 << ADPS2);
 	DIDR0 = (1 << ADC3D);
+	*/
+	
+	//startConversion();
 }
-void startConversion()
-{
-	ADCSRA |= (1 << ADSC);
-}
-
 
 ISR(TIMER1_OVF_vect)
 {
 	//pm2.5
 	TCNT1L = 100;
-	startConversion();
 }
 
 ISR(TIMER2_OVF_vect)
@@ -103,12 +109,8 @@ ISR(TIMER2_OVF_vect)
 ISR(ADC_vect)
 {
 	dutyCycle = ADC/4;
-	if (a1 == 0){
-		PORTB |= (1 << PORTB0);
-		a1 = 1;
-	}else{
-		PORTB |= (0 << PORTB0);
-		a1 = 0;
-	}
+}
+ISR(TIMER0_OVF_vect)
+{
 	
 }
