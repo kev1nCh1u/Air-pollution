@@ -18,15 +18,15 @@ int a1 = 0,a2 = 0,a;
 int main(void)
 {	
 	
-	DDRD = (1 << PORTD6) | (1 << PORTD5) | (1 << PORTD3) | (1 << PORTD4) | (1 << PORTD7);
-	DDRB = (1 << PORTB3) | (1 << PORTB0) | (1 << PORTB1);
+	DDRD = (1 << PORTD6) | (1 << PORTD5) | (1 << PORTD3);
+	DDRB = (1 << PORTB3) | (1 << PORTB1);
 		
 	
 	
 	//計數器0為三色LED控制、1為pm2.5的脈波訊號、2為馬達的控制
-	TCCR0A = (1 << COM0A1) | (1 << WGM00) | (1 << WGM01);
-	TCCR1A = (1 << COM1A1) | (1 << WGM10);
-	TCCR2A = (1 << COM2A1) | (1 << COM2B1) | (1 << WGM20) | (1 << WGM21);
+	TCCR0A = (1 << COM0A1) | (1 << COM0B1) | (1 << WGM00);
+	TCCR1A = (1 << COM1A1) | (1 << COM1A0) | (1 << WGM10);
+	TCCR2A = (1 << COM2A1) | (1 << WGM20) | (1 << WGM21);
 	TIMSK0 = (1 << TOIE0);
 	TIMSK1 = (1 << TOIE1);
 	TIMSK2 = (1 << TOIE2);
@@ -39,42 +39,36 @@ int main(void)
 	TCCR1B = (1 << CS10) | (1 << CS12) | (1 << WGM12);
 	TCCR2B = (1 << CS20) | (1 << CS21) | (1 << CS22);
 
-	OCR1A = 104;
+	OCR1A = 251;
 	
     while(1)
     {
         //TODO:: Please write your application code
 		if (dutyCycle < 50 ) //green
 		{
-			PORTD &= 0 << PORTD4;
-			PORTD &= 0 << PORTD7;
-			PORTB &= 0 << PORTB0;
+			OCR0A = 0;
+			OCR0B = 255;
 		}
 		else if (dutyCycle < 100 ) //yellow
-		{
-			PORTD |= 0x10;
-			PORTD &= 0x7f;
-			PORTB &= 0 << PORTB0;
+		{	
+			OCR0A = 180;
+			OCR0B = 247;
 		}
 		else if (dutyCycle < 150) //orange
 		{
-			PORTD &= 0 << PORTD4;
-			PORTD |= 1 << PORTD7;
-			PORTB &= 0 << PORTB0;
+			OCR0A = 230;
+			OCR0B = 255;
 		}
 		else if (dutyCycle < 200 ) //red
 		{
-			PORTD |= 1 << PORTD4;
-			PORTD |= 1 << PORTD7;
-			PORTB &= 0 << PORTB0;
+			OCR0A = 255;
+			OCR0B = 0;
 		}
 		else //purple
 		{
-			PORTD &= 0 << PORTD4;
-			PORTD &= 0 << PORTD7;
-			PORTB |= 1 << PORTB0;
+			OCR0A = 100;
+			OCR0B = 100;
 		}
-		//PWM
 		
     }
 }
@@ -103,6 +97,7 @@ ISR(TIMER1_OVF_vect)
 
 ISR(TIMER2_OVF_vect)
 {
+	//pwm
 	OCR2A = dutyCycle / 13.42 + 13;
 }
 
