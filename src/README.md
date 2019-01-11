@@ -1,3 +1,8 @@
+# code
+main 主程式
+by Atmel Studio 7.0
+
+
 # 程式操作紀錄
 
 ## 2018/11/21更新
